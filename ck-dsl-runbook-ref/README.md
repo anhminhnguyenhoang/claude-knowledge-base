@@ -1,0 +1,90 @@
+# CK DSL Optimization Runbook — reference
+
+The **canonical CK (Composable Kernel) DSL Optimization Runbook**: a
+long-form checklist + lever reference for optimizing GPU kernels written
+with `ck_dsl`. Every general optimization concept is tied to a concrete
+`ck_dsl` primitive, helper, instance, or static probe, so an engineer
+with the codebase open can find the lever, change it, verify it, measure
+it, and explain it.
+
+This is the *reference companion* to the sibling topic
+[`../ck-dsl-runbook/`](../ck-dsl-runbook/README.md), which is a *worked
+walkthrough* of applying this runbook end-to-end to one skinny-M decode
+GEMM. (That same case study appears here in condensed form as
+[skinny-m-decode-gemm](50-case-studies/skinny-m-decode-gemm.md), runbook
+§17.7.) Read this topic for the **menu of levers and the method**; read
+the walkthrough for **one problem taken from 4.38× slower to parity**.
+
+## Source
+
+Derived verbatim from the upstream document
+`projects/composablekernel/python/ck_dsl/dsl_docs/optimization/optimization_runbook.md`
+on the ROCm `rocm-libraries` fork branch
+`users/vanantha/ck-dsl-prototype`. The full document (3,133 lines) is
+preserved in
+[`../_sources/ck-dsl-optimization-runbook.md`](../_sources/ck-dsl-optimization-runbook.md)
+for provenance.
+
+> **Verify live paths before relying on them.** Most notes cite live
+> source paths (`instances/*.py`, `helpers/*.py`,
+> `utilities/tools/dsl_probes/*`) and line numbers in the upstream
+> `ck_dsl` tree. These drift — confirm the
+> [upstream path](https://github.com/ROCm/rocm-libraries/blob/users/vanantha/ck-dsl-prototype/projects/composablekernel/python/ck_dsl/dsl_docs/optimization/optimization_runbook.md)
+> still resolves and the referenced symbols still exist before acting on
+> a recommendation.
+
+## Reading order
+
+### 00 · Method (read first)
+- [the-loop-and-how-to-read](00-method/the-loop-and-how-to-read.md) — the 10-step optimization loop and the document map. **Start here.**
+- [reproducible-commands](00-method/reproducible-commands.md) — exact venv / PYTHONPATH / harness / rocprof invocations (§19).
+
+### 10 · Diagnose before you change
+- [define-the-problem](10-diagnosis/define-the-problem.md) — operation contract, shapes, layouts, dtypes/tolerances, boundaries (§1).
+- [establish-baselines](10-diagnosis/establish-baselines.md) — correctness gates, perf baselines, benchmark hygiene, metadata (§2).
+- [bottleneck-classification](10-diagnosis/bottleneck-classification.md) — arithmetic intensity, rocprof PMC decision tree, static-probe tier, bottleneck signal lists (§3).
+- [dsl-probe-workflow](10-diagnosis/dsl-probe-workflow.md) — the static-probe sequence (occupancy → intrinsic → ISA → bench → rocprof) and probe output fields (§18).
+
+### 20 · The levers (lever family by lever family)
+- [algorithmic-mapping](20-levers/algorithmic-mapping.md) — pick the kernel first; GEMM/conv/attention/reduction/transpose family tables + the implicit-GEMM VGPR tax (§4).
+- [work-decomposition](20-levers/work-decomposition.md) — grid/block/wave/thread mapping; MFMA lane mapping; the K-pack lane-mapping bug (§5).
+- [memory-hierarchy](20-levers/memory-hierarchy.md) — global loads/stores, LDS/async DRAM→LDS, bank conflicts (XOR vs padding per arch), registers, caches (§6).
+- [matrix-instructions](20-levers/matrix-instructions.md) — MFMA/WMMA atom selection, operand layout, lane-layout matching across chained atoms, K-pack (§7).
+- [pipelining-scheduling](20-levers/pipelining-scheduling.md) — software pipeline, async copy, waits/barriers, scheduling hints, instruction balance (§8).
+- [epilogue](20-levers/epilogue.md) — direct vs LDS/CShuffle epilogue, the "in-between LDS epilogue loses both ways" caveat, output validation (§9).
+- [compiler-build](20-levers/compiler-build.md) — build type, AMD/HIP flags, DSL-specific compiler hazards, alias semantics (§10).
+- [isa-resource-inspection](20-levers/isa-resource-inspection.md) — the `ck_dsl.analysis` layer; what to count/extract/interpret (§11).
+
+### 30 · Autotuning
+- [knob-catalog-and-sweep](30-autotuning/knob-catalog-and-sweep.md) — **the master knob catalog** (§12.1.A–Q: every `ck_dsl` perf lever), sweep discipline, the dispatcher as a lever, variant naming (§12).
+- [op-specific-checklists](30-autotuning/op-specific-checklists.md) — per-op tuning checklists: GEMM, conv, attention, reduction, fused (§13).
+
+### 40 · Failure modes & reporting
+- [failure-modes](40-failure-reporting/failure-modes.md) — correctness / performance / benchmark failure catalogs (§14).
+- [reporting-template](40-failure-reporting/reporting-template.md) — experiment log, summary template, done-criteria (§15).
+- [decision-heuristics](40-failure-reporting/decision-heuristics.md) — lever-direction heuristics + the anti-pattern list (§16).
+
+### 50 · Empirical case studies
+- [case-studies-overview](50-case-studies/case-studies-overview.md) — bake-off summary, validation pass, attention parity (the order-1 = structural-bug signature) (§17.0–17.3).
+- [unified-attention-2d](50-case-studies/unified-attention-2d.md) — the headline worked example: closing a Triton gap via structural levers; 8 transferable principles (§17.4).
+- [fused-moe](50-case-studies/fused-moe.md) — active-tile dispatch + preshuffle-B, two stacking MoE levers vs CK Tile C++ (§17.5–17.6).
+- [skinny-m-decode-gemm](50-case-studies/skinny-m-decode-gemm.md) — o_proj M=2 to 1.02× rocBLAS, condensed (§17.7; full walkthrough is the sibling topic).
+
+### 60 · Reference
+- [target-architecture-gfx950](60-reference/target-architecture-gfx950.md) — gfx950/CDNA4 MFMA atoms, LDS specs, cross-lane primitives, register/occupancy caps, chiplet, fp8/MX, compiler caveats (§21).
+- [diagnostic-decision-tree](60-reference/diagnostic-decision-tree.md) — the one-page decision tree + symptom-to-action table (Appendix).
+- [cross-references](60-reference/cross-references.md) — pointers to the sibling `ck_dsl` docs, skills, probes, tool stages (§20).
+
+### Glossary
+This document defines its terms inline. For the Tensile kernel-name
+tokens and CK DSL `TraitSpec` knobs decoded as a standalone table, see
+the sibling topic's
+[glossary](../ck-dsl-runbook/glossary.md).
+
+## One-sentence thesis
+
+> Optimization is a disciplined loop, not a bag of tricks: classify the
+> bottleneck with a cheap static probe before paying for rocprof, change
+> **one lever** from a catalogued menu, confirm the change in the
+> per-iter ISA histogram (not just latency), and remember that the cost
+> you remove rarely disappears — it usually moves.
