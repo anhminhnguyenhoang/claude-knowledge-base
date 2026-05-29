@@ -8,6 +8,10 @@ A personal knowledge base of things I learn — GPU kernels, hardware architectu
 |---|---|
 | [hipkitten/](hipkitten/) | HipKittens — HazyResearch's AMD CDNA3/4 tile-DSL: schedules, swizzling, chiplet-aware scheduling, and how `aiter` uses it. |
 
+## Adding a topic
+
+This repo ships a Claude Code skill, [`kb-add-topic`](.claude/skills/kb-add-topic/SKILL.md), that turns raw study material (chat exports, transcripts, paper notes) into a structured, cross-linked topic folder following the conventions below. Invoke it with `/kb-add-topic` (or just ask Claude to "add a topic to the KB") while working in this repo.
+
 ## Conventions
 
 - **Numeric prefixes** on folders/files indicate reading order (`00-` fundamentals first).
