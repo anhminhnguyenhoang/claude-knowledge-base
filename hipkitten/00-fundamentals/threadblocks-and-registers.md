@@ -180,4 +180,4 @@ The 256×256 tile is not derivable from 256 regs/wave alone — you also need th
 
 
 ---
-See also: [cu-simd-wave-vector-alu](cu-simd-wave-vector-alu.md) · [schedules](../10-paper/schedules.md) · [glossary](../glossary.md)
+See also: [cu-simd-wave-vector-alu](cu-simd-wave-vector-alu.md) · [schedules](../01-paper/schedules.md) · [glossary](../glossary.md)

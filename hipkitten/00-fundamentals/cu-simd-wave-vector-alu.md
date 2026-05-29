@@ -145,4 +145,4 @@ The 16-wide SIMD isn't just trivia — it's why CDNA wants ≥2 resident waves p
 
 
 ---
-See also: [threadblocks-and-registers](threadblocks-and-registers.md) · [schedules](../10-paper/schedules.md) · [glossary](../glossary.md)
+See also: [threadblocks-and-registers](threadblocks-and-registers.md) · [schedules](../01-paper/schedules.md) · [glossary](../glossary.md)

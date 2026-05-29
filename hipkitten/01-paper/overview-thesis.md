@@ -123,4 +123,4 @@ Sources:
 
 
 ---
-Deeper dives: [schedules](schedules.md) · [hipcc-agpr-pinning](hipcc-agpr-pinning.md) · [chiplet-scheduling](chiplet-scheduling.md) · [aiter application](../20-aiter/hk-mla-decode-wiring.md)
+Deeper dives: [schedules](schedules.md) · [hipcc-agpr-pinning](hipcc-agpr-pinning.md) · [chiplet-scheduling](chiplet-scheduling.md) · [aiter application](../02-aiter/hk-mla-decode-wiring.md)

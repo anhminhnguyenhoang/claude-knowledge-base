@@ -30,4 +30,4 @@ So in practice it's an experimental MI300X/MI350X FP8 MLA-decode fast path cover
 > Note: the file paths and line numbers above reflect the `aiter` tree at the time of writing — verify against the current source before relying on them.
 
 ---
-Related: [overview-thesis](../10-paper/overview-thesis.md) · [pid-preprocessing-vs-algo1](pid-preprocessing-vs-algo1.md)
+Related: [overview-thesis](../01-paper/overview-thesis.md) · [pid-preprocessing-vs-algo1](pid-preprocessing-vs-algo1.md)

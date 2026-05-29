@@ -178,4 +178,4 @@ Does the kernel read input data that could be reused across blocks?
 
 
 ---
-Theory: [chiplet-scheduling](../10-paper/chiplet-scheduling.md). Interactive viz: [assets/remap_xcd_pid_grid.html](../assets/remap_xcd_pid_grid.html)
+Theory: [chiplet-scheduling](../01-paper/chiplet-scheduling.md). Interactive viz: [assets/remap_xcd_pid_grid.html](../assets/remap_xcd_pid_grid.html)
