@@ -100,6 +100,11 @@ note() {  # $1=outfile $2=name $3=desc $4=start $5=end $6=footer  (SRC = source 
   order (linked list grouped by area folder), and a one-sentence thesis.
 - Root `README.md`: add/refresh the topics table with a row for this topic. Restate
   conventions once here.
+- **Global discoverability**: update the "Current topics:" line in the Knowledge Base
+  section of `~/.claude/CLAUDE.md` so every future session sees the new topic. Append
+  `` `<topic>/` (one-line summary) `` to that list. If the section or line doesn't
+  exist yet, create it (a `## Knowledge Base` section pointing at the repo root with a
+  `Current topics:` line). Edit only that line — don't disturb the rest of the file.
 
 ### 7. Verify (do not skip)
 - Sweep for transcript bleed: `grep -rn '^result:' <topic>/` and any timestamp/
