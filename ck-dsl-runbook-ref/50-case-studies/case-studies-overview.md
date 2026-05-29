@@ -109,4 +109,4 @@ the score path explains an order-of-magnitude max_abs jump before
 suspecting MFMA / lane-layout bugs (whose signatures are in the
 
 ---
-Detailed passes: [unified-attention-2d](unified-attention-2d.md), [fused-moe](fused-moe.md), [skinny-m-decode-gemm](skinny-m-decode-gemm.md). The full 22-step skinny-decode walkthrough is the sibling topic [../../ck-dsl-runbook/](../../ck-dsl-runbook/README.md).
+Detailed passes: [unified-attention-2d](unified-attention-2d.md), [fused-moe](fused-moe.md), and the [skinny-decode-gemm](skinny-decode-gemm/README.md) walkthrough (full 22-step pass; runbook §17.7 condensed form: [runbook-17-7-condensed](skinny-decode-gemm/runbook-17-7-condensed.md)).

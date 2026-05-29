@@ -1,4 +1,9 @@
-# CK DSL Optimization Runbook — skinny-decode GEMM walkthrough
+# Skinny-decode GEMM walkthrough (o_proj M=2)
+
+> Case study under [ck-dsl-runbook-ref](../../README.md). This is the
+> **full 22-step worked walkthrough**; for the runbook's own condensed
+> §17.7 summary of the same pass see
+> [runbook-17-7-condensed](runbook-17-7-condensed.md).
 
 Notes on the **Composable Kernel (CK) DSL Optimization Runbook** applied
 end-to-end to one real problem: a Qwen3-8B **`o_proj` decode** matmul
@@ -19,7 +24,7 @@ because the sweep followed the rules.
 Derived verbatim from the upstream example
 `projects/composablekernel/python/ck_dsl/examples/gemm_perf_skinny_decode/README.md`
 on the ROCm `rocm-libraries` fork branch `users/vanantha/ck-dsl-prototype`.
-The README is preserved in [`../_sources/`](../_sources/) for provenance.
+The README is preserved in [`../../../_sources/`](../../../_sources/) for provenance.
 
 > **Artifacts are link-only.** The 22 step-scripts (`scripts/0N_*.py`) and 22
 > benchmark results (`data/0N_*.json`) were *not* vendored. They live on a

@@ -1,6 +1,6 @@
 ---
-name: skinny-m-decode-gemm
-description: Runbook S17.7: the o_proj M=2 skinny decode GEMM tuned to 1.02x rocBLAS on MI355X (condensed). DTLA frees VGPRs to unlock tile_k=1024, multi-warp per-wave LDS offset fix, chiplet swizzle 2.6% win, HBM-efficiency ceiling argument.
+name: runbook-17-7-condensed
+description: Runbook S17.7: the o_proj M=2 skinny decode GEMM tuned to 1.02x rocBLAS on MI355X (condensed). DTLA frees VGPRs to unlock tile_k=1024, multi-warp per-wave LDS offset fix, chiplet swizzle 2.6% win, HBM-efficiency ceiling argument. Condensed companion to the full walkthrough in this folder.
 source: ck-dsl-optimization-runbook.md (lines 2557-2636)
 ---
 
@@ -86,4 +86,4 @@ python scripts/22_confirm_winner.py    # 20 × 1000 paired vs rocBLAS
 ```
 
 ---
-This is the condensed form of the full 22-step worked walkthrough in the sibling topic [../../ck-dsl-runbook/](../../ck-dsl-runbook/README.md). DTLA/chiplet knobs: [knob-catalog-and-sweep](../30-autotuning/knob-catalog-and-sweep.md) (S12.1.F/L).
+This is the condensed form of the full 22-step worked walkthrough in this folder: [skinny-decode-gemm](README.md). DTLA/chiplet knobs: [knob-catalog-and-sweep](../../30-autotuning/knob-catalog-and-sweep.md) (S12.1.F/L).

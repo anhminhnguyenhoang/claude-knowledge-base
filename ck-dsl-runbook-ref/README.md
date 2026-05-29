@@ -7,13 +7,13 @@ with `ck_dsl`. Every general optimization concept is tied to a concrete
 with the codebase open can find the lever, change it, verify it, measure
 it, and explain it.
 
-This is the *reference companion* to the sibling topic
-[`../ck-dsl-runbook/`](../ck-dsl-runbook/README.md), which is a *worked
-walkthrough* of applying this runbook end-to-end to one skinny-M decode
-GEMM. (That same case study appears here in condensed form as
-[skinny-m-decode-gemm](50-case-studies/skinny-m-decode-gemm.md), runbook
-§17.7.) Read this topic for the **menu of levers and the method**; read
-the walkthrough for **one problem taken from 4.38× slower to parity**.
+This topic is the **menu of levers and the method**. For one problem
+taken from 4.38× slower to parity, the
+[skinny-decode-gemm](50-case-studies/skinny-decode-gemm/README.md)
+case study is a full 22-step *worked walkthrough* of applying this
+runbook end-to-end (the runbook's own condensed §17.7 summary of the
+same pass lives beside it as
+[runbook-17-7-condensed](50-case-studies/skinny-decode-gemm/runbook-17-7-condensed.md)).
 
 ## Source
 
@@ -68,7 +68,7 @@ for provenance.
 - [case-studies-overview](50-case-studies/case-studies-overview.md) — bake-off summary, validation pass, attention parity (the order-1 = structural-bug signature) (§17.0–17.3).
 - [unified-attention-2d](50-case-studies/unified-attention-2d.md) — the headline worked example: closing a Triton gap via structural levers; 8 transferable principles (§17.4).
 - [fused-moe](50-case-studies/fused-moe.md) — active-tile dispatch + preshuffle-B, two stacking MoE levers vs CK Tile C++ (§17.5–17.6).
-- [skinny-m-decode-gemm](50-case-studies/skinny-m-decode-gemm.md) — o_proj M=2 to 1.02× rocBLAS, condensed (§17.7; full walkthrough is the sibling topic).
+- [skinny-decode-gemm/](50-case-studies/skinny-decode-gemm/README.md) — o_proj M=2 to 1.02× rocBLAS: a full 22-step worked walkthrough (its own sub-topic), plus the runbook's condensed §17.7 form beside it.
 
 ### 60 · Reference
 - [target-architecture-gfx950](60-reference/target-architecture-gfx950.md) — gfx950/CDNA4 MFMA atoms, LDS specs, cross-lane primitives, register/occupancy caps, chiplet, fp8/MX, compiler caveats (§21).
@@ -78,8 +78,8 @@ for provenance.
 ### Glossary
 This document defines its terms inline. For the Tensile kernel-name
 tokens and CK DSL `TraitSpec` knobs decoded as a standalone table, see
-the sibling topic's
-[glossary](../ck-dsl-runbook/glossary.md).
+the skinny-decode case study's
+[glossary](50-case-studies/skinny-decode-gemm/glossary.md).
 
 ## One-sentence thesis
 

@@ -115,4 +115,4 @@ floor.** DSL is actually **more bytes-per-µs efficient** than rocBLAS
 (44 % vs 42 % HBM); rocBLAS just streams slightly fewer total bytes.
 
 ---
-Prev: [steps-12-14-direct-to-lds](steps-12-14-direct-to-lds.md). Chiplet background: [hipkitten chiplet-scheduling](../../hipkitten/10-paper/chiplet-scheduling.md). Outcome: [ceiling-and-followups](../20-conclusion/ceiling-and-followups.md).
+Prev: [steps-12-14-direct-to-lds](steps-12-14-direct-to-lds.md). Chiplet background: [hipkitten chiplet-scheduling](../../../../hipkitten/10-paper/chiplet-scheduling.md). Outcome: [ceiling-and-followups](../20-conclusion/ceiling-and-followups.md).

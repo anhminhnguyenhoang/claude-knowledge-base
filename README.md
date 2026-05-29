@@ -7,8 +7,7 @@ A personal knowledge base of things I learn — GPU kernels, hardware architectu
 | Topic | What it covers |
 |---|---|
 | [hipkitten/](hipkitten/) | HipKittens — HazyResearch's AMD CDNA3/4 tile-DSL: schedules, swizzling, chiplet-aware scheduling, and how `aiter` uses it. |
-| [ck-dsl-runbook/](ck-dsl-runbook/) | The CK (Composable Kernel) DSL Optimization Runbook applied end-to-end to a skinny-M decode GEMM: 22 steps from 4.38× slower than rocBLAS to within-noise parity on MI355X. |
-| [ck-dsl-runbook-ref/](ck-dsl-runbook-ref/) | The canonical CK DSL Optimization Runbook itself — the full lever catalog and method (§1–21 + decision tree): diagnose → lever families → autotune → failure modes → gfx950/CDNA4 reference. The reference companion to the walkthrough above. |
+| [ck-dsl-runbook-ref/](ck-dsl-runbook-ref/) | The canonical CK DSL Optimization Runbook: the full lever catalog and method (§1–21 + decision tree): diagnose → lever families → autotune → failure modes → gfx950/CDNA4 reference. Includes the skinny-M decode GEMM worked walkthrough (4.38× slower → rocBLAS parity on MI355X) as a case study. |
 
 ## Setup
 
