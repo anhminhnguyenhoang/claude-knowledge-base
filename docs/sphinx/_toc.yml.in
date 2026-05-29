@@ -1,0 +1,14 @@
+root: index.md
+subtrees:
+  - caption: Tutorial
+    entries:
+    - file: tutorial/sample.md
+  - caption: How to
+    entries:
+    - file: how-to/sample.md
+  - caption: Conceptual
+    entries:
+    - file: conceptual/sample.rst
+  - caption: Reference
+    entries:
+    - file: reference/sample.md    
