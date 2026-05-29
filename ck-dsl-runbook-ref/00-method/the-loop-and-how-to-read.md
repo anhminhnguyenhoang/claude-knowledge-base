@@ -98,4 +98,4 @@ gfx950 compiler caveats.
 
 
 ---
-Next: [define-the-problem](../10-diagnosis/define-the-problem.md) · jump to [knob-catalog-and-sweep](../30-autotuning/knob-catalog-and-sweep.md) for the lever menu · [reproducible-commands](reproducible-commands.md). For a full worked walkthrough applying this method end-to-end, see the [skinny-decode-gemm](../50-case-studies/skinny-decode-gemm/README.md) case study.
+Next: [define-the-problem](../01-diagnosis/define-the-problem.md) · jump to [knob-catalog-and-sweep](../03-autotuning/knob-catalog-and-sweep.md) for the lever menu · [reproducible-commands](reproducible-commands.md). For a full worked walkthrough applying this method end-to-end, see the [skinny-decode-gemm](../05-case-studies/skinny-decode-gemm/README.md) case study.
