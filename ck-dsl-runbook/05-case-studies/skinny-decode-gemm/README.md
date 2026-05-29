@@ -1,6 +1,6 @@
 # Skinny-decode GEMM walkthrough (o_proj M=2)
 
-> Case study under [ck-dsl-runbook-ref](../../README.md). This is the
+> Case study under [ck-dsl-runbook](../../README.md). This is the
 > **full 22-step worked walkthrough**; for the runbook's own condensed
 > §17.7 summary of the same pass see
 > [runbook-17-7-condensed](runbook-17-7-condensed.md).
