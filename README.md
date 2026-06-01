@@ -8,6 +8,7 @@ A personal knowledge base of things I learn — GPU kernels, hardware architectu
 |---|---|
 | [hipkitten/](hipkitten/) | HipKittens — HazyResearch's AMD CDNA3/4 tile-DSL: schedules, swizzling, chiplet-aware scheduling, and how `aiter` uses it. |
 | [ck-dsl-runbook/](ck-dsl-runbook/) | The canonical CK DSL Optimization Runbook: the full lever catalog and method (§1–21 + decision tree): diagnose → lever families → autotune → failure modes → gfx950/CDNA4 reference. Includes the skinny-M decode GEMM worked walkthrough (4.38× slower → rocBLAS parity on MI355X) as a case study. |
+| [flash-attention-v4/](flash-attention-v4/) | FlashAttention-4 — Tri Dao's Blackwell (B200) attention kernel: asymmetric hardware scaling, software-emulated exp, conditional softmax rescaling, the 5-stage warp-specialized pipeline, TMEM & 2-CTA MMA. |
 
 ## Setup
 
