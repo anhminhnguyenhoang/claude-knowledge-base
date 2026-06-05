@@ -41,6 +41,31 @@ chain needs an LDS round-trip or a cross-lane permute. The 32×32
 atoms natively match — prefer them when the chain pattern allows
 (`use_mfma_32x32`, `use_transposed_qk_32x32` on the attention 2D path).
 
+### 21.1a Package memory (HBM) and physical hierarchy
+
+On-chip storage is three distinct categories — registers (operands,
+compiler-managed), LDS (software-managed scratchpad), and L1/L2
+(hardware-managed caches) — backed by off-package HBM. Physical layout
+and why they are not interchangeable: see
+[memory-hierarchy](../02-levers/memory-hierarchy.md) §6.0.
+
+| Resource | gfx950 MI350X | gfx950 MI355X | gfx942 MI300X |
+|---|---|---|---|
+| HBM type | HBM3E | HBM3E | HBM3 |
+| HBM capacity | 288 GB | 288 GB | 192 GB |
+| HBM bandwidth | ~8 TB/s | ~8 TB/s | ~5.3 TB/s |
+| LDS per CU | 160 KB | 160 KB | 64 KB |
+| VGPR / SIMD | 512 | 512 | 512 |
+| AGPR / SIMD | 256 | 256 | 256 |
+| SGPR / CU | 800 | 800 | 800 |
+
+MI350X and MI355X are the **same silicon**: they differ only in form
+factor and power — MI350X is air-cooled (~1000 W TDP), MI355X is
+liquid-cooled (~1400 W TDP, higher clocks → higher peak FLOPs). Memory
+and register sizing are identical between them. The big gfx950-vs-gfx942
+delta for kernel work is LDS (160 KB vs 64 KB/CU, 64 vs 32 banks),
+which also flips the preferred swizzle (padding vs XOR, §6.4a).
+
 ### 21.2 LDS specifics
 
 | Spec | gfx950 | gfx942 (MI300X) | gfx90a (MI250X) |

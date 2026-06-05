@@ -1,10 +1,68 @@
 ---
 name: memory-hierarchy
-description: Runbook S6: global loads/stores (coalescing, buffer-rsrc OOB), LDS/shared (async DRAM->LDS, double-buffer, swizzle), LDS bank conflicts (XOR vs padding per-arch rule), registers, and caches.
+description: Runbook S6: physical storage taxonomy (registers vs LDS vs L1/L2 vs HBM — what's on-chip where, addressable vs cache vs scratchpad), global loads/stores (coalescing, buffer-rsrc OOB), LDS/shared (async DRAM->LDS, double-buffer, swizzle), LDS bank conflicts (XOR vs padding per-arch rule), registers, and caches.
 source: ck-dsl-optimization-runbook.md (lines 805-1019)
 ---
 
 ## 6. Memory Hierarchy
+
+### 6.0 Physical Layout and Storage Taxonomy
+
+Before the levers, the physical picture. On-chip storage comes in
+**three fundamentally different categories** — confusing them leads to
+mistuning. From closest-to-ALU outward:
+
+```
+GPU package
+└── XCD (chiplet)               ← 8 per MI300X/MI350X package
+    └── CU (Compute Unit)
+        └── SIMD (×4 per CU)
+            ├── VGPR / AGPR     ← per-lane registers (operands)
+            └── SGPR            ← per-wave scalar registers
+        ├── LDS                 ← per-CU software-managed scratchpad
+        └── L1 (vL1)            ← per-CU hardware cache
+    └── L2 cache                ← per-XCD hardware cache, shared across CUs
+└── (Infinity Cache) → HBM      ← off-die stacked DRAM, on-package via interposer
+```
+
+The three categories and why they are NOT interchangeable:
+
+1. **Registers (VGPR / AGPR / SGPR)** — *not memory and not a cache.*
+   No addresses; the compiler assigns operands to numbered registers
+   (`v0`, `v1`, …). Live inside each SIMD (4 SIMDs/CU). VGPR/AGPR are
+   per-lane; SGPR is per-wave (uniform across the wave). Fastest,
+   smallest, closest to the ALU. **VGPRs are not L1.**
+
+2. **LDS (Local Data Share)** — real addressable memory with its own
+   address space, but **software-managed**. Data only lives there
+   because the kernel explicitly copied it in via `ds_write` / async
+   DRAM→LDS, and reads it back via `ds_read`. Physically inside each
+   CU; private to that CU (one threadblock maps to one CU), so it is
+   the vehicle for intra-threadblock sharing. Banked SRAM (64 banks on
+   gfx950, 32 on gfx942). **LDS is not L2** — it is a scratchpad, not a
+   cache of DRAM. NVIDIA equivalent: shared memory.
+
+3. **Caches (L1 / L2)** — real memory backing HBM, but
+   **hardware-managed** and transparent. Never addressed directly; they
+   intercept HBM accesses and fill/evict automatically. L1 (vL1) is
+   per-CU; L2 is per-XCD, shared across all CUs on the chiplet.
+
+The distinction that drives tuning:
+
+| Category | Addressable? | Who manages it | Tuning lever |
+|---|---|---|---|
+| Registers | No (named operands) | Compiler | occupancy / spill (§6.5) |
+| LDS | Yes (own space) | **Software** (explicit copy) | bank-conflict / swizzle (§6.4) |
+| L1 / L2 | No (transparent) | **Hardware** (auto) | hit-rate / reuse (§6.6), chiplet remap |
+
+This is why GEMM/attention kernels do an explicit HBM→LDS staging
+step: deliberately parking a tile in the CU scratchpad so the whole
+wave reuses it without re-reading HBM. And why LDS is tuned for bank
+conflicts while L2 is tuned for hit rate (e.g. chiplet/XCD block
+remap reordering work so neighboring blocks reuse L2 lines). Per-arch
+sizes (HBM, LDS/CU, register file): see
+[target-architecture-gfx950](../06-reference/target-architecture-gfx950.md)
+§21.2 / §21.4.
 
 ### 6.1 Global Memory Loads
 
