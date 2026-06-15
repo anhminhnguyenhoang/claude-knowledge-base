@@ -78,6 +78,11 @@ instructions** that should follow you to every machine (environment rules, outpu
 conventions, merge-conflict discipline, the Knowledge Base section, …), and
 `~/.claude/skills/` holds **user-level skills** available in every project
 (`kb-add-topic`, `cdna-kernel-opt`, `chiplet-xcd-remap`, `kernel-walkthrough`, …).
+The status line is driven by `~/.claude/statusline-command.sh` (model + effort
+label, context-usage bar, cwd, git branch/status, cost, elapsed time); a copy is
+vendored in this repo at [`.claude/statusline-command.sh`](.claude/statusline-command.sh).
+To use it, point `statusLine.command` in `~/.claude/settings.json` at the restored
+path and ensure the file is executable (`chmod +x`).
 
 These live **outside any repo**, so they don't travel automatically. To snapshot
 them onto a new system, copy both to a synced location (this KB repo, a dotfiles
@@ -153,5 +158,6 @@ work, so the backup is only as fresh as your last copy.
 | Awareness | `~/.claude/CLAUDE.md` → Knowledge Base section | every session | §4 backup/restore |
 | Global instructions | `~/.claude/CLAUDE.md` (whole file) | every session | §4 backup/restore |
 | Skill (machine-wide) | `~/.claude/skills/<name>/` | every session | §4 backup/restore |
+| Status line script | `~/.claude/statusline-command.sh` (vendored at `.claude/statusline-command.sh`) | every session | `git clone` + point `settings.json` at it |
 | Skill (repo, KB only) | `~/knowledge-base/.claude/skills/kb-add-topic/` | this repo + clones | `git clone` |
 | Auto-memory | `~/.claude/projects/<path-slug>/memory/` | per project, every session | §5 tar snapshot (mind the path slug) |
