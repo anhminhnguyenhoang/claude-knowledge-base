@@ -51,6 +51,12 @@ Distilled from a multi-session FlyDSL kernel-authoring + optimization effort
   autotune-median trap (p10/min never median), cold-L2 vs hot-L2, why wall-clock
   lies at small shapes, device-time-only, cosine+mean-error correctness, and the
   change-one-thing / re-measure-surprises discipline.
+- [hot-loop-scheduling-method](20-methodology/hot-loop-scheduling-method.md) —
+  how to know whether a `sched_mfma/vmem/dsrd/dswr` hot-loop schedule is
+  effective: `sched_*(X)` is an ordering hint (count of lowered instrs, not
+  work), the measure→diagnose→lever→re-measure loop, the roofline gate, and why
+  compute-bound kernels hand-tune the ratio while memory-bound ones win on
+  algorithm (split-K / reuse / async DMA) not schedule.
 
 ## Related topics
 
