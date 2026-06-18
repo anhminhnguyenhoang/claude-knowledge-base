@@ -72,6 +72,7 @@ for provenance.
 
 ### 06 · Reference
 - [target-architecture-gfx950](06-reference/target-architecture-gfx950.md) — gfx950/CDNA4 MFMA atoms, LDS specs, cross-lane primitives, register/occupancy caps, chiplet, fp8/MX, compiler caveats (§21).
+- [gfx942-registers-occupancy](06-reference/gfx942-registers-occupancy.md) — gfx942/CDNA3 (MI300X) VGPR/AGPR/SGPR per-SIMD capacities (512 total = 256+256 flexible), per-wave allocation math, worked occupancy example; flags the cross-arch difference vs the gfx950 model.
 - [diagnostic-decision-tree](06-reference/diagnostic-decision-tree.md) — the one-page decision tree + symptom-to-action table (Appendix).
 - [cross-references](06-reference/cross-references.md) — pointers to the sibling `ck_dsl` docs, skills, probes, tool stages (§20).
 
