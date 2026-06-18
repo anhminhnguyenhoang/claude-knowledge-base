@@ -1,7 +1,7 @@
 ---
 name: gfx942-registers-occupancy
 description: gfx942/CDNA3 (MI300X) per-SIMD register files (VGPR/AGPR/SGPR) and wave occupancy — the 512-total = 256 VGPR + 256 AGPR *flexible* split that differs from the gfx950 reference's separate-files model, the per-wave vs per-SIMD allocation arithmetic, and a worked occupancy example.
-source: AMD Instinct MI300 CDNA3 ISA Reference Guide (2025-08-05); ck-dsl-runbook 06-reference/target-architecture-gfx950.md §21.4; hipkitten/01-paper/hipcc-agpr-pinning.md; mla_reduce_v1 worked example (2026-06-18)
+source: AMD Instinct MI300 CDNA3 ISA Reference Guide (2025-08-05); ck-dsl-runbook 06-reference/target-architecture-gfx950.md §21.4; hipkitten/01-paper/hipcc-agpr-pinning.md
 ---
 
 ## gfx942 / CDNA3 register files & occupancy
@@ -61,19 +61,20 @@ Occupancy = the **minimum** over all limiters:
 - SGPR budget,
 - hardware cap: **8 waves/SIMD = 32 waves/CU**.
 
-### Worked example — `kn_mla_reduce_v1` (memory-bound reduction)
+### Worked example — from block geometry to waves/SIMD
 
-A workgroup of `kNumThreads = 128` = **2 waves/WG** (128 ÷ 64), launched with
-`__launch_bounds__(128, 8)` → request **8 workgroups/CU**:
+A workgroup of 128 threads = **2 waves/WG** (128 ÷ 64), launched with
+`__launch_bounds__(128, N)` requesting **N workgroups/CU**. For N = 8:
 
 ```
 2 waves/WG × 8 WG/CU = 16 waves/CU ÷ 4 SIMDs = 4 waves/SIMD  (achieved)
 ```
 
-4 ≤ 8 (hw cap), and the kernel's tiny VGPR/LDS footprint clears both budgets, so
-the request is honored. The CU *could* hold up to 32 waves; this kernel
-deliberately runs at 16 because that's what `kOccupancy=8` asks for — enough
-workgroup-level parallelism to hide HBM latency on a pure reduction.
+4 ≤ 8 (hw cap); if VGPR/LDS footprint also clears their budgets, the request is
+honored. The CU *could* hold up to 32 waves — running at 16 is a deliberate
+occupancy target, not a limit. For a memory-bound kernel this is often enough
+workgroup-level parallelism to hide HBM latency without spending VGPRs to push
+occupancy higher.
 
 ### Distinctions worth not confusing
 
