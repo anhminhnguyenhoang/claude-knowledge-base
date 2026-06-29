@@ -11,6 +11,7 @@ A personal knowledge base of things I learn — GPU kernels, hardware architectu
 | [flash-attention-v4/](flash-attention-v4/) | FlashAttention-4 — Tri Dao's Blackwell (B200) attention kernel: asymmetric hardware scaling, software-emulated exp, conditional softmax rescaling, the 5-stage warp-specialized pipeline, TMEM & 2-CTA MMA. |
 | [flydsl-jdbba/](flydsl-jdbba/) | FlyDSL jagged grouped-GEMM (HSTU jdbba) on MI355X/gfx950: verified varlen layout-API idioms (bounded buffer descriptors, runtime base-offset views, device scalar reads), the memory-bound optimization case study (XCD remap, epilogue vectorization, 16×16×32 atom, XCD-aware persistent visiting order, plus verified dead-ends), and the measurement discipline for benchmarking vs an autotuning baseline. |
 | [rocm-driver-recovery/](rocm-driver-recovery/) | Runbook for recovering a shared MI300X/gfx942 box after the ROCm + `amdgpu` stack is uninstalled: diagnose hardware-vs-software, audit who tore it down, re-add AMD apt repos, reinstall `amdgpu-dkms` + ROCm userspace, load and verify with `rocm-smi`. From a live 2026-06-23 incident recovery. |
+| [glm-models/](glm-models/) | Z.AI GLM foundation models on Hugging Face — architecture configs (MoE, sparse attention / IndexShare, 1M context), tokenizer, and inference framework requirements. |
 
 ## Setup
 
